@@ -5,7 +5,7 @@ Profile when you are owner:
 -----
 ![image](https://github.com/user-attachments/assets/b45cb4c1-19dd-4027-8b50-ae62d02c1c95)
 
-Profile when you are just a random user or  a not authorized user:
+Profile when you are just a random user or an unauthorized user:
 -----
 ![image](https://github.com/user-attachments/assets/56700d73-ae69-4015-9fad-38f2599327ac)
 
@@ -17,4 +17,12 @@ Full review pages:
 Search example:
 -----
 ![image](https://github.com/user-attachments/assets/79252a99-238d-4cdd-9504-1b7f2b850ada)
+
+New review:
+-----
+![image](https://github.com/user-attachments/assets/b5f0f6ca-ed2f-477c-b3fd-a5d74fab7c2a)
+
+Editing a review:
+-----
+![image](https://github.com/user-attachments/assets/a2ba7fa2-081e-4b04-8c91-ba38204ced34)
 
