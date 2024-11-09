@@ -4,7 +4,9 @@ namespace ReviewerProject.ViewModels
 {
     public class AddReviewViewModel
     {
+        [MaxLength(80, ErrorMessage = "Maximum 80 character long")]
         public string? Name { get; set; }
+        [MaxLength(1099, ErrorMessage = "Maximum 1099 character long")]
         public string? Description { get; set; }
         public int? Rating { get; set; }
 
