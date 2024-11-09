@@ -1,0 +1,24 @@
+﻿.container {
+    max-width: 1000px;
+}
+
+.container h2 {
+    text-align: center;
+}
+
+.control-btn{
+    width: 100%;
+}
+
+.remember-square{
+    max-width: 15px;
+    margin-top: 1px;
+}
+
+.remember{
+    padding-left: 5px;
+}
+
+.empty-row{
+    margin-top: 1%;
+}

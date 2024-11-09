@@ -1,0 +1,36 @@
+﻿<link rel="stylesheet" href="~/css/LogRegEditProfileStyles.css" asp-append-version="true" />
+@model ReviewerProject.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Login Page";
+}
+<div class="container">
+    <h2>Login</h2>
+    <form method="post" asp-controller="Account" asp-action="Login">
+        <div class="empty-row">
+            <label asp-for="Email"></label><br />
+            <input asp-for="Email" type="text" class="form-control shadow-none" maxlength="100" />
+            @Html.ValidationMessageFor(m => m.Email, null, new { @class = "text-danger" })
+        </div>
+        <div class="empty-row">
+            <label asp-for="Password"></label><br />
+            <input asp-for="Password" type="password" class="form-control shadow-none" maxlength="80" />
+            @Html.ValidationMessageFor(m => m.Password, null, new { @class = "text-danger" })
+        </div>
+        <div class="row empty-row">
+            <div class="col remember-square">
+                <input asp-for="RememberMe" />
+            </div>
+            <div class="col  remember">
+                <label asp-for="RememberMe"></label><br />
+            </div>
+        </div>
+        <div class="row empty-row">
+            <div class="col">
+                <input type="submit" class="btn btn-dark shadow-none control-btn" value="Login"  />
+            </div>
+            <div class="col">
+                <a asp-controller="Account" asp-action="Register" class="btn btn-outline-dark shadow-none control-btn">Register</a>
+            </div>
+        </div>
+    </form>
+</div>

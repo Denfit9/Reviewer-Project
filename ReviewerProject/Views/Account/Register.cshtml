@@ -1,0 +1,44 @@
+﻿<link rel="stylesheet" href="~/css/LogRegEditProfileStyles.css" asp-append-version="true" />
+@model ReviewerProject.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Registration";
+}
+<div class="container">
+    <h2>Registration</h2>
+    <form method="post" asp-controller="Account" asp-action="Register">
+        <div class="empty-row">
+            <label asp-for="FirstName">First Name (*)</label><br/>
+            <input asp-for="FirstName" class="form-control shadow-none" maxlength="50" />
+            @Html.ValidationMessageFor(m => m.FirstName, null, new { @class = "text-danger" })
+        </div>
+        <div class="empty-row">
+            <label asp-for="LastName">Last Name</label><br/>
+            <input asp-for="LastName" class="form-control shadow-none" maxlength="50" />
+            @Html.ValidationMessageFor(m => m.LastName, null, new { @class = "text-danger" })
+        </div>
+        <div class="empty-row">
+            <label asp-for="Email">Email (*)</label><br />
+            <input asp-for="Email" class="form-control shadow-none" maxlength="80" />
+            @Html.ValidationMessageFor(m => m.Email, null, new { @class = "text-danger" })
+        </div>
+        <div class="empty-row">
+            <label asp-for="Password">Password (*)</label><br />
+            <input asp-for="Password" autocomplete="new-password" class="form-control shadow-none" maxlength="80" />
+            @Html.ValidationMessageFor(m => m.Password, null, new { @class = "text-danger" })
+        </div>
+        <div class="empty-row">
+            <label asp-for="PasswordConfirm">Confirm Password (*)</label><br />
+            <input asp-for="PasswordConfirm" autocomplete="new-password" class="form-control shadow-none" maxlength="80" />
+            @Html.ValidationMessageFor(m => m.PasswordConfirm, null, new { @class = "text-danger" })
+        </div>
+        <div class="row empty-row">
+            <div class="col">
+                <input type="submit" value="Register" class="btn btn-dark shadow-none control-btn" />
+            </div>
+            <div class="col">
+                <a asp-controller="Account" asp-action="Login" class="btn btn-outline-dark shadow-none control-btn">Login</a>
+            </div>
+        </div>
+    </form>
+
+</div>

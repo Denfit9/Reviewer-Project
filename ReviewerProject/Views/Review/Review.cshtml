@@ -1,0 +1,89 @@
+﻿@using System.Globalization
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<User> UserManager
+<link rel="stylesheet" href="~/css/reviewStyle.css" asp-append-version="true" />
+@model ReviewerProject.ViewModels.ReviewExactViewModel
+@{
+    ViewData["Title"] = $"{Model.Name}";
+    var userAuth = await UserManager.GetUserAsync(User);
+}
+
+<div class="review">
+    <div class="row upper">
+        <div class="col exact">
+            <p class="inline">
+                <span class="bold">Title: </span>
+                <span>@Model.Name</span>
+            </p>
+        </div>
+        <div class="col exact">
+            <p class="inline">
+                <span class="bold">Type: </span>
+                <span>@Model.ReviewingType.Name</span>
+            </p>
+        </div>
+        <div class="col exact">
+            <p class="inline">
+                @if(Model.Rating > 7)
+                {
+                    <span class="green bold">@Model.Rating</span>
+                }
+                else if (Model.Rating > 4)
+                {
+                    <span class="yellow bold">@Model.Rating</span>
+                }
+                else
+                {
+                    <span class="red bold">@Model.Rating</span>
+                }
+                <span class="bold">/ 10</span>
+            </p>
+        </div>
+    </div>
+    <div class="row upper">
+        <div class="col exact">
+            <p class="inline">
+                <span class="bold">By: </span>
+                <a class="names" asp-controller="Account" asp-action="Profile" asp-route-id="@Model.UserKey">@Model.User.FirstName @Model.User.LastName</a>
+            </p>
+        </div>
+        <div class="col exact">
+            <p class="inline">
+                @if (Model.WasUpdated)
+                {
+                    <span class="bold">Updated At: </span>
+                }
+                else
+                {
+                    <span class="bold">Created At: </span>
+                }
+                <span>@Model.CreatedDate.ToString("dd MMMM yyyy HH:mm", new CultureInfo("en-GB"))</span>
+            </p>
+        </div>
+    </div>
+    <div class="description">
+        <div class="multiline">@Model.Description</div>
+    </div>
+    <div class="row bottom">
+        @if (userAuth != null)
+        {
+            if (Model.UserKey == userAuth.Id)
+            {
+                <div class="col">
+                    <a class="btn btn-sm btn btn-light shadow-none" asp-action="ReviewEdit" asp-controller="Review" asp-route-id="@Model.Id">Edit Review</a>
+                </div>
+                <div class="col">
+                    <a class="btn btn-sm btn btn-light shadow-none" asp-action="ReviewDelete" asp-controller="Review" asp-route-id="@Model.Id">Delete Review</a>
+                </div>
+            }
+            else
+            {
+                <div class="col">
+                    <a class="btn btn-sm btn btn-light shadow-none" asp-action="Review" asp-controller="Review" asp-route-id="@Model.Id">Full Review</a>
+                </div>
+                <div class="col"></div>
+                <div class="col"></div>
+            }
+        }
+    </div>
+</div>

@@ -1,0 +1,72 @@
+﻿<link rel="stylesheet" href="~/css/reviewStyle.css" asp-append-version="true" />
+<script>
+    function redirectToDelete() {
+        window.location.href = '/Review/ReviewDelete/@Model.Id';
+    }
+</script>
+@model ReviewerProject.ViewModels.EditReviewViewModel
+@{
+    ViewData["Title"] = "Review Editing";
+}
+<div class="container">
+    <h2>Editing a Review</h2>
+    <form method="post" asp-controller="Review" asp-action="ReviewEdit">
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="title">
+            <label asp-for="Name">Title</label><br />
+            <input asp-for="Name" type="text" class="form-control shadow-none" maxlength="80" />
+            @Html.ValidationMessageFor(m => m.Name, null, new { @class = "text-danger" })
+        </div>
+        <div class="description">
+            <label asp-for="Description"></label><br />
+            <textarea class="form-control shadow-none" rows="11" asp-for="Description" maxlength="1099"></textarea>
+            @Html.ValidationMessageFor(m => m.Description, null, new { @class = "text-danger" })
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <label asp-for="Rating"></label><br />
+                <select class="form-select shadow-none" aria-label="Default select example" asp-for="Rating">
+                    @foreach (int rating in Model.Ratings)
+                    {
+                        <option value="@rating">@rating</option>
+                    }
+                </select>
+                @for (int i = 0; i < Model.Ratings.Count; i++)
+                {
+                    @Html.HiddenFor(m => m.Ratings[i])
+                }
+            </div>
+            <div class="col">
+                <label asp-for="ReviewingTypeKey">Type</label><br />
+                <select class="form-select shadow-none" aria-label="Default select example" asp-for="ReviewingTypeKey">
+                    @foreach (var type in Model.ReviewingTypes)
+                    {
+                        <option value="@type.Id">@type.Name</option>
+                    }
+                </select>
+                @for (int i = 0; i < Model.ReviewingTypes.Count; i++)
+                {
+                    @Html.HiddenFor(m => m.ReviewingTypes[i].Id)
+                    @Html.HiddenFor(m => m.ReviewingTypes[i].Name)
+                }
+            </div>
+                <div class="col-sm-2 button">
+                    <input type="submit" value="Save" class="btn btn-success shadow-none control-btn" />
+                </div>
+                <div class="col-sm-2 button">
+                <input type="button" value="Delete" class="btn btn-danger shadow-none control-btn" onclick="redirectToDelete()" />
+                </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                @Html.ValidationMessageFor(m => m.Rating, null, new { @class = "text-danger" })
+            </div>
+            <div class="col">
+                @Html.ValidationMessageFor(m => m.ReviewingTypeKey, null, new { @class = "text-danger" })
+            </div>
+            <div class="col-sm-2 button">
+            </div>
+        </div>
+    </form>
+
+</div>

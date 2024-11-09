@@ -1,0 +1,36 @@
+﻿<link rel="stylesheet" href="~/css/LogRegEditProfileStyles.css" asp-append-version="true" />
+@model ReviewerProject.ViewModels.EditUserViewModel
+@{
+    ViewData["Title"] = "Profile Editing";
+}
+<div class="container">
+    <h2>Profile editing</h2>
+    <form method="post" asp-action="ProfileEdit" asp-controller="Account">
+        <div class="form-group">
+            <input type="hidden" asp-for="Id" />
+        </div>
+        <div class="empty-row">
+            <label asp-for="FirstName" class="control-label">First name</label>
+            <input asp-for="FirstName" class="form-control shadow-none" maxlength="80" />
+            @Html.ValidationMessageFor(model => model.FirstName, null, new { @class = "text-danger" })
+        </div>
+        <div class="empty-row">
+            <label asp-for="LastName" class="control-label">Last name</label>
+            <input asp-for="LastName" class="form-control shadow-none" maxlength="80" />
+            @Html.ValidationMessageFor(model => model.LastName, null, new { @class = "text-danger" })
+        </div>
+        <div class="empty-row">
+            <label  class="control-label">Password</label>
+            <input asp-for="Password" autocomplete="new-password" class="form-control shadow-none" maxlength="80" />
+            @Html.ValidationMessageFor(model => model.Password, null, new { @class = "text-danger" })
+        </div>
+        <div class="row empty-row">
+            <div class="col">
+                <button type="submit" value="Save" class="btn btn-outline-dark shadow-none control-btn">Save</button>
+            </div>
+            <div class="col">
+                <button type="submit" asp-action="ProfileDelete" class="btn btn-danger shadow-none control-btn">Delete</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,64 @@
+/* _content/ReviewerProject/Views/Shared/_Layout.cshtml.rz.scp.css */
+a.navbar-brand[b-e38dqr547l] {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+a[b-e38dqr547l] {
+  color: #0077cc;
+}
+
+.btn-primary[b-e38dqr547l] {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active[b-e38dqr547l], .nav-pills .show > .nav-link[b-e38dqr547l] {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.navbar-nav[b-e38dqr547l]{
+    width:100%;
+}
+
+.border-top[b-e38dqr547l] {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom[b-e38dqr547l] {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow[b-e38dqr547l] {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy[b-e38dqr547l] {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+.footer[b-e38dqr547l] {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;
+}
+
+#button-like[b-e38dqr547l] {
+    border: none;
+    display: inline;
+    font-family: inherit;
+    font-size: inherit;
+    padding: none;
+    width: auto;
+    background-color: transparent;
+}
+
+#right-alligned[b-e38dqr547l] {
+    margin-left:auto;
+}

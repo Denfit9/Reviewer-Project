@@ -1,0 +1,317 @@
+﻿﻿@using Microsoft.AspNetCore.Identity
+@model ReviewerProject.ViewModels.ProfileViewModel
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@{
+    ViewData["Title"] = $"{Model.FirstName} {Model.LastName}'s profile";
+    var userAuth = await UserManager.GetUserAsync(User);
+}
+<link rel="stylesheet" href="~/css/profileStyles.css" asp-append-version="true" />
+
+<div class="container text-center">
+    <div class="row align-items-start">
+        <div class="colProf" id="profileCol">
+            <div class="profile">
+                @if (Model.LastName != null)
+                {
+                    <p class="inline-bold">First Name:&nbsp </p>
+                    <p class="inline"> @Model.FirstName</p>
+                    <br>
+                    <p class="inline-bold">Last Name:&nbsp </p>
+                    <p class="inline"> @Model.LastName</p>
+                    <br>
+                }
+                else
+                {
+                    <p class="inline-bold">Name:&nbsp </p>
+                    <p class="inline"> @Model.FirstName</p>
+                    <br>
+                }
+                <p class="inline-bold">Total Reviews:&nbsp </p>
+                @if(Model.Reviews != null)
+                {
+                    <p class="inline"> @Model.Reviews.Count</p>
+                    <br>
+                    <p class="inline-bold">Average Rating:&nbsp </p>
+                    <p class="inline"> @String.Format("{0:0.00}", Model.Average)</p>
+                }
+                else
+                {
+                    <p class="inline"> 0 </p>
+                }
+
+            </div>
+            @if (userAuth != null)
+            {
+                if (Model.Id == userAuth.Id)
+                {
+                    <div class="control-buttons">
+                        <a class="btn btn-sm btn-outline-primary shadow-none" asp-action="ProfileEdit">Edit Profile</a>
+                    </div>
+                }
+            }
+        </div>
+        <div class="col" style="padding-right: 0px;">
+            @if(Model.Reviews == null)
+            {
+                <h5>User got no reviews</h5>
+                 @if (userAuth != null)
+                 {
+                    if (userAuth.Id == Model.Id)
+                    {
+                        <div class="container text-center">
+                            <div class="row d-flex align-items-stretch">
+                                <div class="col-8">
+                                </div>
+                                <div class="col">
+                                    <a class="btn btn-sm btn-outline-primary shadow-none" asp-action="ReviewAdd" asp-controller="Review" style="height:100%; width: 100%">Add Review</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }               
+            }
+            else
+            {
+                <h5>User's Reviews:</h5>
+                <div class="container text-center">
+                    <div class="row d-flex align-items-stretch">
+                        @if (userAuth != null)
+                        {
+                            if (userAuth.Id == Model.Id)
+                            {
+                                <div class="col-8">
+                                    <form method="get">
+                                        <div class="input-group">
+                                            <input asp-for="SearchResult" name="searchResult" placeholder="Search result" class="form-control" />
+                                            <input type="submit" value="Search" class="btn btn-outline-secondary shadow-none" />
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col">
+                                    <a class="btn btn-sm btn-outline-primary shadow-none" asp-action="ReviewAdd" asp-controller="Review">Add Review</a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col">
+                                    <form method="get">
+                                        <div class="input-group">
+                                            <input asp-for="SearchResult" name="searchResult" placeholder="Search result" class="form-control" />
+                                            <input type="submit" value="Search" class="btn btn-outline-secondary shadow-none" />
+                                        </div>
+                                    </form>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="col">
+                                <form method="get">
+                                    <div class="input-group">
+                                        <input asp-for="SearchResult" name="searchResult" placeholder="Search result" class="form-control" />
+                                        <input type="submit" value="Search" class="btn btn-outline-secondary shadow-none" />
+                                    </div>
+                                </form>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="reviews-list">
+                    @foreach (var review in Model.Reviews)
+                    {
+                        if(review.Rating > 7)
+                        {
+                            <div class="review top">
+                                <div class="row upper">
+                                    <div class="col">
+                                        <p class="inline">
+                                            <span class="bold">Title: </span>
+                                            <span>@review.Name</span>
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="inline">
+                                            <span class="bold">Type: </span>
+                                            <span>@review.ReviewingType</span>
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="inline">
+                                            <span class="green bold">@review.Rating</span>
+                                            <span class="bold">/ 10</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="description">
+                                    <div class="cut">@review.Description</div>
+                                </div>
+                                <div class="row bottom">
+                                    @if (userAuth != null)
+                                    {
+                                        if (Model.Id == userAuth.Id)
+                                        {
+                                            <div class="col">
+                                                <a class="btn btn-sm btn btn-light shadow-none" asp-action="Review" asp-controller="Review" asp-route-id="@review.Id">Full Review</a>
+                                            </div>
+                                            <div class="col">
+                                                <a class="btn btn-sm btn btn-light shadow-none" asp-action="ReviewEdit" asp-controller="Review" asp-route-id="@review.Id">Edit Review</a>
+                                            </div>
+                                            <div class="col">
+                                                <a class="btn btn-sm btn btn-light shadow-none" asp-action="ReviewDelete" asp-controller="Review" asp-route-id="@review.Id">Delete Review</a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col">
+                                                <a class="btn btn-sm btn btn-light shadow-none" asp-action="Review" asp-controller="Review" asp-route-id="@review.Id">Full Review</a>
+                                            </div>
+                                            <div class="col"></div>
+                                            <div class="col"></div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="col">
+                                            <a class="btn btn-sm btn btn-light shadow-none" asp-action="Review" asp-controller="Review" asp-route-id="@review.Id">Full Review</a>
+                                        </div>
+                                        <div class="col"></div>
+                                        <div class="col"></div>
+                                    }
+
+                                </div>
+                            </div>
+                        }
+                        else if(review.Rating > 4)
+                        {
+                            <div class="review average">
+                                <div class="row upper">
+                                    <div class="col">
+                                        <p class="inline">
+                                            <span class="bold">Title: </span>
+                                            <span class="cut-title">@review.Name</span>
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="inline">
+                                            <span class="bold">Type: </span>
+                                            <span>@review.ReviewingType</span>
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="inline">
+                                            <span class="yellow bold">@review.Rating</span>
+                                            <span class="bold">/ 10</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="description">
+                                    <div class="cut">@review.Description</div>
+                                </div>
+                                <div class="row bottom">
+                                    @if (userAuth != null)
+                                    {
+                                        if (Model.Id == userAuth.Id)
+                                        {
+                                            <div class="col">
+                                                <a class="btn btn-sm btn btn-light shadow-none" asp-action="Review" asp-controller="Review" asp-route-id="@review.Id">Full Review</a>
+                                            </div>
+                                            <div class="col">
+                                                <a class="btn btn-sm btn btn-light shadow-none" asp-action="ReviewEdit" asp-controller="Review" asp-route-id="@review.Id">Edit Review</a>
+                                            </div>
+                                            <div class="col">
+                                                <a class="btn btn-sm btn btn-light shadow-none" asp-action="ReviewDelete" asp-controller="Review" asp-route-id="@review.Id">Delete Review</a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col">
+                                                <a class="btn btn-sm btn btn-light shadow-none" asp-action="Review" asp-controller="Review" asp-route-id="@review.Id">Full Review</a>
+                                            </div>
+                                            <div class="col"></div>
+                                            <div class="col"></div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="col">
+                                            <a class="btn btn-sm btn btn-light shadow-none" asp-action="Review" asp-controller="Review" asp-route-id="@review.Id">Full Review</a>
+                                        </div>
+                                        <div class="col"></div>
+                                        <div class="col"></div>
+                                    }
+
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="review disaster">
+                                <div class="row upper">
+                                    <div class="col">
+                                        <p class="inline">
+                                            <span class="bold">Title: </span>
+                                            <span>@review.Name</span>
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="inline">
+                                            <span class="bold">Type: </span>
+                                            <span>@review.ReviewingType</span>
+                                        </p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="inline">
+                                            <span class="red bold">@review.Rating</span>
+                                            <span class="bold">/ 10</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="description">
+                                    <div class="cut">@review.Description</div>
+                                </div>
+                                <div class="row bottom">
+                                    @if (userAuth != null)
+                                    {
+                                        if (Model.Id == userAuth.Id)
+                                        {
+                                            <div class="col">
+                                                <a class="btn btn-sm btn btn-light shadow-none" asp-action="Review" asp-controller="Review" asp-route-id="@review.Id">Full Review</a>
+                                            </div>
+                                            <div class="col">
+                                                <a class="btn btn-sm btn btn-light shadow-none" asp-action="ReviewEdit" asp-controller="Review" asp-route-id="@review.Id">Edit Review</a>
+                                            </div>
+                                            <div class="col">
+                                                <a class="btn btn-sm btn btn-light shadow-none" asp-action="ReviewDelete" asp-controller="Review" asp-route-id="@review.Id">Delete Review</a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col">
+                                                <a class="btn btn-sm btn btn-light shadow-none" asp-action="Review" asp-controller="Review" asp-route-id="@review.Id">Full Review</a>
+                                            </div>
+                                            <div class="col"></div>
+                                            <div class="col"></div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="col">
+                                            <a class="btn btn-sm btn btn-light shadow-none" asp-action="Review" asp-controller="Review" asp-route-id="@review.Id">Full Review</a>
+                                        </div>
+                                        <div class="col"></div>
+                                        <div class="col"></div>
+                                    }
+
+                                </div>
+                            </div>
+                        }
+
+                    }
+                </div>
+            }      
+        </div>
+
+    </div>
+</div>
+
